@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating a User on CentOS 7</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Creating a User on CentOS 7</h1>
+    <p>This guide provides the steps to create a user on CentOS 7, including commands for adding a home directory after the initial creation.</p>
+
+    <h2>Step 1: Create the User without a Home Directory</h2>
+    <p>Use the <code>useradd</code> command to create the user without a home directory:</p>
+    <pre><code>sudo useradd -M huaweitag</code></pre>
+
+    <h2>Step 2: Set the User's Password</h2>
+    <p>Use the <code>passwd</code> command to set the password manually:</p>
+    <pre><code>sudo passwd huaweitag</code></pre>
+    <p>You will be prompted to enter and confirm the new password.</p>
+
+    <h2>Step 3: Set the Account Expiration Date</h2>
+    <p>Use the <code>chage</code> command to set the account expiration date to one week from today:</p>
+    <pre><code>sudo chage -E $(date -d "+7 days" +"%Y-%m-%d") huaweitag</code></pre>
+
+    <h2>Step 4: Create the Home Directory (if needed)</h2>
+    <p>If you initially created the user without a home directory and now want to add one, follow these steps:</p>
+
+    <h3>Create the Home Directory</h3>
+    <pre><code>sudo mkdir /home/huaweitag</code></pre>
+
+    <h3>Set Ownership and Permissions</h3>
+    <pre><code>sudo chown huaweitag:huaweitag /home/huaweitag
+            sudo chmod 755 /home/huaweitag</code></pre>
+
+    <h3>Update the User's Home Directory</h3>
+    <p>Update the user's home directory in the <code>/etc/passwd</code> file:</p>
+    <pre><code>sudo usermod -d /home/huaweitag huaweitag</code></pre>
+
+    <h2>Alternative: Create User with Home Directory Initially</h2>
+    <p>To create a user with a home directory from the start, use the <code>-m</code> option with <code>useradd</code>:</p>
+    <pre><code>sudo useradd -m huaweitag</code></pre>
+    <p>This command automatically creates the home directory and sets the correct permissions.</p>
+
+    <h2>Summary</h2>
+    <p>To create a home directory for an existing user who was created without one, manually create the directory, set the ownership and permissions, and update the user's home directory path. To create a user with a home directory from the start, use the <code>-m</code> option with <code>useradd</code>.</p>
+</body>
+</html>
